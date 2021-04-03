@@ -2,29 +2,39 @@
 #define ARRAY_H
 
 #include <cstddef>
+#include <iostream>
 #include <stdexcept>
 
 using std::size_t;
+using std::cout;
+using std::endl;
 
 class Array
 {
 public:
-    virtual int operator[](size_t index) const;
-    virtual int& operator[](size_t index);
+    virtual ~Array() { };
 
-    virtual void add(int newElement);
-    virtual void addAll(const Array &other);
+    virtual int operator[](size_t index) const = 0;
+    virtual int& operator[](size_t index) = 0;
 
-    virtual size_t getLength() const;
+    virtual void add(int newElement) = 0;
+    virtual void addAll(const Array &other) = 0;
 
+    virtual size_t getLength() const = 0;
+
+    virtual void print() const;
+
+    Array &operator=(const Array &other) = delete;
 protected:
     void checkBounds(size_t index) const;
+    void printData() const;
 };
 
 class IncrementalArray: public Array {
 public:
     IncrementalArray();
-    IncrementalArray(int initialSize);
+    IncrementalArray(size_t initialSize);
+    ~IncrementalArray();
 
     int operator[](size_t index) const;
     int &operator[](size_t index);
@@ -33,8 +43,10 @@ public:
     void addAll(const Array &other);
 
     size_t getLength() const;
+
+    void print() const;
 private:
-    const int defaultInitialSize = 4;
+    const static size_t DEFAULT_INITIAL_SIZE = 4;
 
     int *data = nullptr;
     size_t length = 0;
