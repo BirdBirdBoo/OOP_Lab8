@@ -13,10 +13,177 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar"/>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="1">
+     <widget class="QLabel" name="label_4">
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>BlockyArray</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QPushButton" name="add_b_to_a">
+      <property name="text">
+       <string>Add Blocky to Incremetal</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Element:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="elementEditA">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="addElementButtonA">
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>IncrementalArray</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <layout class="QHBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Element:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="elementEditB">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="addElementButtonB">
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="3" column="1">
+     <widget class="QPushButton" name="add_a_to_b">
+      <property name="text">
+       <string>Add Incremental to Blocky</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QListWidget" name="arrayViewA"/>
+    </item>
+    <item row="2" column="1">
+     <widget class="QListWidget" name="arrayViewB"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionSave"/>
+    <addaction name="actionOpen"/>
+   </widget>
+   <addaction name="menu_File"/>
+  </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionSave">
+   <property name="text">
+    <string>&amp;Save</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>&amp;Open</string>
+   </property>
+  </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>arrayViewA</sender>
+   <signal>itemChanged(QListWidgetItem*)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onListItemAChanged(QListWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>169</x>
+     <y>140</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>898</x>
+     <y>247</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>arrayViewB</sender>
+   <signal>itemChanged(QListWidgetItem*)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onListItemBChanged(QListWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>577</x>
+     <y>360</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>857</x>
+     <y>324</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onListItemAChanged(QListWidgetItem*)</slot>
+  <slot>onListItemBChanged(QListWidgetItem*)</slot>
+ </slots>
 </ui>

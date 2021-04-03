@@ -13,6 +13,7 @@ class Array
 {
 public:
     virtual ~Array() { };
+    Array &operator=(const Array &other) = delete;
 
     virtual int operator[](size_t index) const = 0;
     virtual int& operator[](size_t index) = 0;
@@ -27,7 +28,9 @@ public:
 
     virtual void print() const;
 
-    Array &operator=(const Array &other) = delete;
+    Array &operator+=(int element);
+    Array &operator+=(const Array& other);
+
 protected:
     virtual void setElementAtSafe(size_t index, int element) = 0;
 
