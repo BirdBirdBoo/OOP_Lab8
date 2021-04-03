@@ -27,6 +27,12 @@ void MainWindow::testArrays()
     IncrementalArray i_array2 = IncrementalArray(0);
     Array &array2 = i_array2;
     array2.add(8);
+    array2.print();
+
+    array2.addAll(array1);
+    array2.print();
+
+    array1.addAll(array2);
     array2.addAll(array1);
     array2.print();
 }

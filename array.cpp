@@ -1,5 +1,7 @@
 #include "array.h"
 
+// BEGIN ARRAY
+
 void Array::add(int newElement)
 {
     ensureCapacity(length + 1);
@@ -42,6 +44,12 @@ void Array::checkBounds(size_t index) const {
         throw new std::invalid_argument("Array index is out of bounds!");
     }
 }
+
+// END ARRAY
+
+
+
+// BEGIN INCREMENTAL ARRAY
 
 IncrementalArray::IncrementalArray() : IncrementalArray(DEFAULT_INITIAL_SIZE)
 {
@@ -99,3 +107,5 @@ void IncrementalArray::setElementAtSafe(size_t index, int element)
 {
     data[index] = element;
 }
+
+// END INCREMENTAL ARRAY
