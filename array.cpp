@@ -1,5 +1,23 @@
 #include "array.h"
 
+void Array::add(int newElement)
+{
+    ensureCapacity(length + 1);
+    setElementAtSafe(length, newElement);
+    ++length;
+}
+
+void Array::addAll(const Array &other)
+{
+    const size_t newLength = length + other.length;
+    ensureCapacity(newLength);
+
+    for (size_t i = length; i < newLength; ++i) {
+        setElementAtSafe(i, other[i - length]);
+    }
+    length = newLength;
+}
+
 void Array::print() const
 {
     cout << "Array of size " << getLength() << endl;
@@ -64,35 +82,20 @@ void IncrementalArray::alloc(size_t expectedCapacity)
     capacity = expectedCapacity;
 }
 
-size_t IncrementalArray::getLength() const
+void IncrementalArray::ensureCapacity(size_t requiredCapacity)
 {
-    return length;
-}
-
-void IncrementalArray::add(int newElement) {
-    if (length + 1 >= capacity) {
-        alloc(length + 1);
+    if (requiredCapacity > capacity) {
+        alloc(requiredCapacity);
     }
-
-    data[length] = newElement;
-    ++length;
-}
-
-void IncrementalArray::addAll(const Array &other)
-{
-    const size_t newLength = length + other.getLength();
-    if (newLength >= capacity) {
-        alloc(newLength);
-    }
-
-    for (size_t i = length; i < newLength; ++i) {
-        data[i] = other[i - length];
-    }
-    length = newLength;
 }
 
 void IncrementalArray::print() const
 {
     cout << "IncrementalArray of length " << length << " (capacity: " << capacity << ")" << endl;
     printData();
+}
+
+void IncrementalArray::setElementAtSafe(size_t index, int element)
+{
+    data[index] = element;
 }
