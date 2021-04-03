@@ -35,5 +35,19 @@ void MainWindow::testArrays()
     array1.addAll(array2);
     array2.addAll(array1);
     array2.print();
+
+    BlockyArray b_array3 = BlockyArray(2);
+    Array &array3 = b_array3;
+
+    array3.print();
+    array3.add(2);
+    array3.add(5);
+    array3.add(-1);
+    array3.print();
+
+    array3[0] = 0;
+    array2.addAll(array2);
+    array3.addAll(array2);
+    array3.print();
 }
 

@@ -65,6 +65,9 @@ IncrementalArray::IncrementalArray(size_t initialSize)
 
 IncrementalArray::~IncrementalArray()
 {
+    if (data == nullptr)
+        return;
+
     free(data);
 }
 
@@ -109,3 +112,84 @@ void IncrementalArray::setElementAtSafe(size_t index, int element)
 }
 
 // END INCREMENTAL ARRAY
+
+
+
+// BEGIN BLOCKY ARRAY
+
+BlockyArray::BlockyArray(): BlockyArray(DEFAULT_INITIAL_BLOCK_SIZE)
+{
+}
+
+BlockyArray::BlockyArray(size_t initialBlockSize):
+    currentBlockSize(initialBlockSize)
+{
+    if (initialBlockSize == 0) {
+        return;
+    }
+
+    alloc(initialBlockSize);
+}
+
+BlockyArray::~BlockyArray()
+{
+    if (data == nullptr)
+        return;
+
+    free(data);
+}
+
+void BlockyArray::alloc(size_t expectedCapacity)
+{
+    size_t tempCapacity = capacity;
+    while (tempCapacity < expectedCapacity) {
+        tempCapacity += currentBlockSize;
+
+        incrementBlockSize();
+    }
+
+    if (data == nullptr) {
+        data = (int *) calloc(expectedCapacity, sizeof (int));
+    } else {
+        data = (int *) realloc(data, expectedCapacity * sizeof (int));
+    }
+
+    capacity = tempCapacity;
+}
+
+void BlockyArray::ensureCapacity(size_t expectedCapacity)
+{
+    if (expectedCapacity > capacity) {
+        alloc(expectedCapacity);
+    }
+}
+
+void BlockyArray::incrementBlockSize()
+{
+    currentBlockSize += blockSizeIncrement;
+}
+
+int BlockyArray::operator[](size_t index) const {
+    checkBounds(index);
+
+    return data[index];
+}
+
+int &BlockyArray::operator[](size_t index) {
+    checkBounds(index);
+
+    return data[index];
+}
+
+void BlockyArray::setElementAtSafe(size_t index, int element)
+{
+    data[index] = element;
+}
+
+void BlockyArray::print() const
+{
+    cout << "BlockyArray of length " << length
+         << " (capacity: " << capacity << "; next block size: " << currentBlockSize << ")"
+         << endl;
+    printData();
+}

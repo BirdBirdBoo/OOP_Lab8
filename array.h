@@ -61,4 +61,34 @@ private:
     void alloc(size_t expectedCapacity);
 };
 
+class BlockyArray: public Array {
+public:
+    BlockyArray();
+    BlockyArray(size_t initialBlockSize);
+    ~BlockyArray();
+
+    int operator[](size_t index) const;
+    int &operator[](size_t index);
+
+    void ensureCapacity(size_t capacity);
+
+    void print() const;
+
+protected:
+    void setElementAtSafe(size_t index, int element);
+
+private:
+    const static size_t DEFAULT_INITIAL_BLOCK_SIZE = 2;
+
+    int *data = nullptr;
+    size_t capacity = 0;
+    size_t currentBlockSize = 0;
+
+    size_t blockSizeIncrement = 1;
+
+    void alloc(size_t expectedCapacity);
+
+    void incrementBlockSize();
+};
+
 #endif // ARRAY_H
