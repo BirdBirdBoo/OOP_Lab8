@@ -20,6 +20,9 @@ public:
 
     virtual void add(int newElement);
     virtual void addAll(const Array &other);
+    virtual void addAll(const int *nativeArray, size_t arraySize);
+
+    virtual void clear() = 0;
 
     virtual void ensureCapacity(size_t capacity) = 0;
     virtual size_t getLength() const {
@@ -48,6 +51,8 @@ public:
     int operator[](size_t index) const;
     int &operator[](size_t index);
 
+    void clear();
+
     void ensureCapacity(size_t capacity);
 
     void print() const;
@@ -72,6 +77,8 @@ public:
 
     int operator[](size_t index) const;
     int &operator[](size_t index);
+
+    void clear();
 
     void ensureCapacity(size_t capacity);
 

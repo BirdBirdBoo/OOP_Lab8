@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     arrayA = new IncrementalArray();
     arrayB = new BlockyArray();
 
-    //testArrays();
+    testArrays();
 }
 
 MainWindow::~MainWindow()
@@ -60,6 +60,9 @@ void MainWindow::testArrays()
     array3[0] = 0;
     array2.addAll(array2);
     array3 += array2 += -100;
+    array3.print();
+
+    array3.clear();
     array3.print();
 }
 

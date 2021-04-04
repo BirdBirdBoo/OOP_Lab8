@@ -18,6 +18,17 @@ void Array::addAll(const Array &other) {
     length = newLength;
 }
 
+void Array::addAll(const int *nativeArray, size_t arraySize) {
+    const size_t newLength = length + arraySize;
+    ensureCapacity(newLength);
+
+    for (size_t i = arraySize; i < newLength; ++i) {
+        setElementAtSafe(i, nativeArray[i - length]);
+    }
+
+    length = newLength;
+}
+
 void Array::print() const {
     cout << "Array of size " << getLength() << endl;
     printData();
@@ -78,6 +89,11 @@ int IncrementalArray::operator[](size_t index) const {
     checkBounds(index);
 
     return data[index];
+}
+
+void IncrementalArray::clear()
+{
+    length = 0;
 }
 
 int &IncrementalArray::operator[](size_t index) {
@@ -166,6 +182,11 @@ int BlockyArray::operator[](size_t index) const {
     checkBounds(index);
 
     return data[index];
+}
+
+void BlockyArray::clear()
+{
+    length = 0;
 }
 
 int &BlockyArray::operator[](size_t index) {
