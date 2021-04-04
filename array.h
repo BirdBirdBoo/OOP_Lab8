@@ -5,6 +5,8 @@
 #include <iostream>
 #include <stdexcept>
 
+#include <string>
+
 using std::size_t;
 using std::cout;
 using std::endl;
@@ -41,6 +43,9 @@ protected:
     void printData() const;
     size_t length = 0;
 };
+
+std::ostream &operator<<(std::ostream &output, const Array &toWrite);
+std::istream &operator>>(std::istream &input, Array &toRead);
 
 class IncrementalArray: public Array {
 public:

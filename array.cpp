@@ -62,6 +62,59 @@ void Array::checkBounds(size_t index) const {
     }
 }
 
+std::ostream &operator<<(std::ostream &output, const Array &toWrite) {
+    output << "Array[";
+    const size_t len = toWrite.getLength();
+
+    if (len != 0) {
+        output << toWrite[0];
+        for (size_t i = 1; i < len; ++i) {
+            output << "," << toWrite[i];
+        }
+    }
+    output << ']' << endl;
+    return output;
+}
+
+std::istream &operator>>(std::istream &input, Array &toRead) {
+    toRead.clear();
+
+    std::string line;
+    getline(input, line);
+
+    size_t startPos = line.find("Array[");
+
+    if (startPos == std::string::npos)
+        return input;
+
+    line = line.substr(startPos);
+
+    size_t endPos = line.find_first_of(']');
+    if (endPos == std::string::npos)
+        return input;
+
+    if (endPos - startPos == 1)
+        return input;
+
+    size_t previousDelimeter = startPos + 5;
+    size_t currentDelimeter = line.find_first_of(',');
+
+    while (currentDelimeter != std::string::npos && currentDelimeter < endPos) {
+        int element = std::stoi(line.substr(previousDelimeter + 1, currentDelimeter));
+        toRead.add(element);
+
+        previousDelimeter = currentDelimeter;
+        currentDelimeter = line.find_first_of(',', currentDelimeter + 1);
+    }
+
+    if (currentDelimeter == std::string::npos && previousDelimeter != startPos + 5) {
+        int element = std::stoi(line.substr(previousDelimeter + 1, endPos));
+        toRead.add(element);
+    }
+
+    return input;
+}
+
 // END ARRAY
 
 

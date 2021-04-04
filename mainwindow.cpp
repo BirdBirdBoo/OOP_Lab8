@@ -64,6 +64,17 @@ void MainWindow::testArrays()
 
     array3.clear();
     array3.print();
+
+    //std::ofstream output1;
+    //output1.open("array.txt");
+    //output1 << array1 << std::endl;
+    //output1.close();
+
+    std::ifstream input2;
+    input2.open("array.txt");
+    input2 >> array2;
+
+    array2.print();
 }
 
 
