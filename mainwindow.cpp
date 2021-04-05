@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -167,4 +168,77 @@ void MainWindow::on_add_a_to_b_clicked()
 void MainWindow::on_add_b_to_a_clicked()
 {
     ui->arrayViewA << (*arrayA += *arrayB);
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+    QFileDialog dialog(this);
+    initArrayOpenDialog(dialog, false);
+
+    if (dialog.exec() == QDialog::Accepted) {
+        auto file = getSelectedFile(dialog).toStdString();
+
+        std::ofstream output;
+        output.open(file);
+
+        if (!output.is_open()) {
+            QMessageBox::critical(this,
+                                  "Error",
+                                  "Could not open the file");
+            return;
+        }
+
+        output << *arrayA;
+        output << *arrayB;
+        output.close();
+    }
+}
+
+void MainWindow::on_actionOpen_triggered() {
+    QFileDialog dialog(this);
+    initArrayOpenDialog(dialog, true);
+
+    if (dialog.exec() == QDialog::Accepted) {
+        auto file = getSelectedFile(dialog).toStdString();
+
+        std::ifstream input;
+        input.open(file);
+
+        if (!input.is_open()) {
+            QMessageBox::critical(this,
+                                  "Error",
+                                  "Could not open the file");
+            return;
+        }
+
+        input >> *arrayA;
+        input >> *arrayB;
+        input.close();
+
+        ui->arrayViewA << *arrayA;
+        ui->arrayViewB << *arrayB;
+    }
+}
+
+void MainWindow::initArrayOpenDialog(QFileDialog &dialog, bool open) {
+    static bool firstTextDialog = true;
+
+    if (firstTextDialog) {
+        firstTextDialog = false;
+        const QStringList documentsLocations = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
+        dialog.setDirectory(documentsLocations.isEmpty() ? QDir::currentPath() : documentsLocations.last());
+    }
+
+    QStringList textFilters({
+                                "text/plain",
+                                "application/octet-stream"
+                            });
+    dialog.setMimeTypeFilters(textFilters);
+    dialog.selectMimeTypeFilter("text/plain");
+    dialog.setAcceptMode(open ? QFileDialog::AcceptOpen : QFileDialog::AcceptSave);
+}
+
+QString MainWindow::getSelectedFile(const QFileDialog &dialog) {
+    auto selectedPaths = dialog.selectedFiles();
+    return QDir::toNativeSeparators(selectedPaths.first());
 }

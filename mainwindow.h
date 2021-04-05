@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QFileDialog>
+#include <QStandardPaths>
 #include <QDebug>
 #include <QIntValidator>
 #include <QListWidget>
@@ -36,6 +38,10 @@ private slots:
 
     void on_add_b_to_a_clicked();
 
+    void on_actionSave_triggered();
+
+    void on_actionOpen_triggered();
+
 private:
     Ui::MainWindow *ui;
 
@@ -47,6 +53,8 @@ private:
     void setUpInputs();
 
     void testArrays();
+    void initArrayOpenDialog(QFileDialog &dialog, bool open);
+    QString getSelectedFile(const QFileDialog &dialog);
 };
 
 QListWidget *operator<<(QListWidget *output, const Array &toOutput);

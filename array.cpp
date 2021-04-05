@@ -213,9 +213,9 @@ void BlockyArray::alloc(size_t expectedCapacity) {
     }
 
     if (data == nullptr) {
-        data = (int *) calloc(expectedCapacity, sizeof (int));
+        data = (int *) calloc(tempCapacity, sizeof (int));
     } else {
-        data = (int *) realloc(data, expectedCapacity * sizeof (int));
+        data = (int *) realloc(data, tempCapacity * sizeof (int));
     }
 
     capacity = tempCapacity;
