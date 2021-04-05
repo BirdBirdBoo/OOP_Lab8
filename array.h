@@ -26,7 +26,6 @@ public:
 
     virtual void clear() = 0;
 
-    virtual void ensureCapacity(size_t capacity) = 0;
     virtual size_t getLength() const {
         return length;
     }
@@ -37,6 +36,7 @@ public:
     Array &operator+=(const Array& other);
 
 protected:
+    virtual void ensureCapacity(size_t capacity) = 0;
     virtual void setElementAtSafe(size_t index, int element) = 0;
 
     void checkBounds(size_t index) const;
@@ -58,11 +58,10 @@ public:
 
     void clear();
 
-    void ensureCapacity(size_t capacity);
-
     void print() const;
 
 protected:
+    void ensureCapacity(size_t capacity);
     void setElementAtSafe(size_t index, int element);
 
 private:
@@ -85,11 +84,10 @@ public:
 
     void clear();
 
-    void ensureCapacity(size_t capacity);
-
     void print() const;
 
 protected:
+    void ensureCapacity(size_t capacity);
     void setElementAtSafe(size_t index, int element);
 
 private:
